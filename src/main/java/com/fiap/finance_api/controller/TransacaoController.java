@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/transacoes")
-@CrossOrigin(origins = "*") // Necessário para o Next.js conseguir acessar
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class TransacaoController {
 
     @Autowired
