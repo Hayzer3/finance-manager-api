@@ -48,15 +48,14 @@ public class TransacaoService {
 
         return resumo;
     }
-    // No seu Service ou Controller Java
+
     public Transacao atualizar(Long id, Transacao novaTransacao) {
-        Transacao existente = repository.findById(id).get();
-
-        existente.setDescricao(novaTransacao.getDescricao());
-        existente.setValor(novaTransacao.getValor());
-        existente.setTipo(novaTransacao.getTipo()); // VERIFIQUE SE ESSA LINHA EXISTE!
-        existente.setCategoria(novaTransacao.getCategoria());
-
-        return repository.save(existente);
+        return repository.findById(id).map(existente -> {
+            existente.setDescricao(novaTransacao.getDescricao());
+            existente.setValor(novaTransacao.getValor());
+            existente.setTipo(novaTransacao.getTipo());
+            existente.setCategoria(novaTransacao.getCategoria());
+            return repository.save(existente);
+        }).orElseThrow(() -> new RuntimeException("Transação não encontrada com id: " + id));
     }
 }

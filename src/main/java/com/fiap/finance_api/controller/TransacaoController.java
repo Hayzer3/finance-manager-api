@@ -29,6 +29,16 @@ public class TransacaoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(transacao));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Transacao> update(@PathVariable Long id, @RequestBody Transacao transacao) {
+        try {
+            Transacao atualizada = service.atualizar(id, transacao);
+            return ResponseEntity.ok(atualizada);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deletar(id);
