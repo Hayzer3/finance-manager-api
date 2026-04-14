@@ -14,13 +14,11 @@ public class TransacaoService {
 
     @Autowired
     private TransacaoRepository repository;
-    /// seiola
     public List<Transacao> listarTodas() {
         return repository.findAll();
     }
 
     public Transacao salvar(Transacao transacao) {
-        // Regra simples: se for despesa, garantimos que o valor seja salvo negativo ou tratado no front
         return repository.save(transacao);
     }
 
@@ -49,5 +47,16 @@ public class TransacaoService {
         resumo.put("saldo", receitas - despesas);
 
         return resumo;
+    }
+    // No seu Service ou Controller Java
+    public Transacao atualizar(Long id, Transacao novaTransacao) {
+        Transacao existente = repository.findById(id).get();
+
+        existente.setDescricao(novaTransacao.getDescricao());
+        existente.setValor(novaTransacao.getValor());
+        existente.setTipo(novaTransacao.getTipo()); // VERIFIQUE SE ESSA LINHA EXISTE!
+        existente.setCategoria(novaTransacao.getCategoria());
+
+        return repository.save(existente);
     }
 }
